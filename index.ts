@@ -6,12 +6,20 @@ import { z } from "zod";
 import { ChatService } from "./src/services/ChatService.js";
 import { FileService } from "./src/services/FileService.js";
 
-const API_URL = process.env.API_URL || "https://api.openai.com/v1/chat/completions";
-const MODEL = process.env.MODEL || "gpt-4o";
-const API_KEY = process.env.OPENAI_API_KEY;
+import { resolveProviderConfig } from "./src/services/ProviderConfig.js";
+
+const providerConfig = resolveProviderConfig();
+const API_URL = providerConfig.apiUrl;
+const MODEL = providerConfig.model;
+const API_KEY = providerConfig.apiKey;
 
 if (!API_KEY) {
-  throw new Error("OPENAI_API_KEY environment variable is required");
+  throw new Error(
+    `${providerConfig.apiKeyEnv} environment variable is required` +
+      (providerConfig.provider === "meta"
+        ? " for the Meta Model API (PROVIDER=meta)"
+        : ""),
+  );
 }
 
 const server = new McpServer({

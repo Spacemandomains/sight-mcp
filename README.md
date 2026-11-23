@@ -83,6 +83,20 @@ Add this to your Claude Desktop config (`~/Library/Application Support/Claude/cl
 }
 ```
 
+#### Meta Model API (Muse Spark)
+Meta's Model API is OpenAI-compatible. Enable the built-in preset with
+`PROVIDER=meta` — the key is read from `MODEL_API_KEY`, the endpoint defaults
+to `https://api.meta.ai/v1/chat/completions`, and the model defaults to
+`muse-spark-1.3` (multimodal: images, video and audio). `API_URL` / `MODEL`
+still override the preset.
+```json
+"env": {
+  "PROVIDER": "meta",
+  "MODEL_API_KEY": "your-meta-model-api-key",
+  "MODEL": "muse-spark-1.3"
+}
+```
+
 #### Other Compatible APIs
 Any API that follows the OpenAI vision format will work. Just update the `API_URL` and `MODEL` accordingly.
 
